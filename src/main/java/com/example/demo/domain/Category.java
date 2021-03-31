@@ -9,6 +9,9 @@ package com.example.demo.domain;
 * Serializable
 * */
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +20,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
+@Getter
+@NoArgsConstructor
 public class Category implements Serializable {
     private static final long serialVersionUID = 1L;
     /*
@@ -27,8 +32,6 @@ public class Category implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
-
-    public Category() {}
 
     public Category(Integer id, String nome) {
         this.id = id;
