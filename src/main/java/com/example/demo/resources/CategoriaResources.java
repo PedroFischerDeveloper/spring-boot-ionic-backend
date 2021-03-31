@@ -19,8 +19,13 @@ public class CategoriaResources {
     @Autowired
     private CategoryServices categoryServices;
 
+    @RequestMapping(method = RequestMethod.GET, value = "all")
+    public ResponseEntity<?> get(@PathVariable Integer categoryId) {
+        return ResponseEntity.ok().body(categoryServices.get());
+    }
+
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> search(@PathVariable Integer categoryId) {
+    public ResponseEntity<?> findById(@PathVariable Integer categoryId) {
         return ResponseEntity.ok().body(categoryServices.search(categoryId));
     }
 }
