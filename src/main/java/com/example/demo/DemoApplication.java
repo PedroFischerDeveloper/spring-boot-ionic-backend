@@ -47,6 +47,8 @@ public class DemoApplication implements CommandLineRunner  {
 		p2.getCategorys().addAll(Arrays.asList(c1, c2));
 		p3.getCategorys().addAll(Arrays.asList(c1));
 
+		
+
 		categoryRepository.saveAll(Arrays.asList(c1, c2));
 		productRepository.saveAll(Arrays.asList(p1, p2, p3));
 
