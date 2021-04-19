@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryServices {
@@ -17,9 +18,12 @@ public class CategoryServices {
         return categoryRepository.findAll();
     }
 
-    public Category search(Integer categoriaId) {
-        var category = categoryRepository.findById(categoriaId);
-        return category.orElse(null);
+    public Category findById(Integer categoryId) {
+        Optional<Category> category = categoryRepository.findById(categoryId);
+        if(category.isEmpty()) {
+            throw new ObjectNotFoundException("Object not found " + category);
+        }
+        return category.get();
     }
 
 }

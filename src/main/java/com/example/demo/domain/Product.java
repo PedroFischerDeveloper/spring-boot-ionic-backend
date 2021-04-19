@@ -1,5 +1,7 @@
 package com.example.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ public class Product implements Serializable {
     * incluir as notações abaixo para ser
     * criado a tabela automaticamente
     * */
+    @JsonBackReference
     @ManyToMany
     @JoinTable(
             name = "PRODUCT_CATEGORY",
