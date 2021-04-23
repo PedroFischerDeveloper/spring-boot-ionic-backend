@@ -1,5 +1,7 @@
 package com.example.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
@@ -16,7 +18,7 @@ public class Client implements Serializable {
     private String cpfOrCnpj;
     private Integer type;
 
-    @OneToMany(mappedBy="client", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy="client", cascade = CascadeType.ALL)
     private List<Address> address = new ArrayList<>();
 
     // conjunto, não aceita repetição
@@ -75,6 +77,8 @@ public class Client implements Serializable {
         this.type = clienteType.getId();
     }
 
+    @JsonManagedReference
+    @OneToMany(mappedBy = "client")
     public List<Address> getAddress() {
         return address;
     }

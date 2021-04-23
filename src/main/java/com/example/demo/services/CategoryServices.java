@@ -20,9 +20,11 @@ public class CategoryServices {
 
     public Category findById(Integer categoryId) {
         Optional<Category> category = categoryRepository.findById(categoryId);
+
         if(category.isEmpty()) {
             throw new ObjectNotFoundException("Object not found " + category);
         }
+
         return category.get();
     }
 
