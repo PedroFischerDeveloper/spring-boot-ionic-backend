@@ -1,9 +1,6 @@
 package com.example.demo.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -21,8 +18,12 @@ public class Address implements Serializable {
     private String district;
     private String zipCode;
 
+    @ManyToOne
+    @JoinColumn(name = "client_id")
     private Client client;
 
+    @ManyToOne
+    @JoinColumn(name="city_id")
     private City city;
 
     public Address() {}

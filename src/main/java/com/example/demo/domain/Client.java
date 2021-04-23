@@ -1,14 +1,8 @@
 package com.example.demo.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Client implements Serializable {
@@ -22,9 +16,12 @@ public class Client implements Serializable {
     private String cpfOrCnpj;
     private Integer type;
 
-    private List<Address> addresses;
+    @OneToMany(mappedBy="client", cascade=CascadeType.ALL)
+    private List<Address> address = new ArrayList<>();
 
     // conjunto, não aceita repetição
+    @ElementCollection // anotação que permite representar uma entidade fraca
+    @CollectionTable(name = "PHONE")
     private Set<String> phones = new HashSet<>();
 
     public Client() {};
@@ -78,12 +75,12 @@ public class Client implements Serializable {
         this.type = clienteType.getId();
     }
 
-    public List<Address> getAddresses() {
-        return addresses;
+    public List<Address> getAddress() {
+        return address;
     }
 
-    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
+    public void setAddress(List<Address> address) {
+        this.address = address;
     }
 
     public Set<String> getPhones() {
