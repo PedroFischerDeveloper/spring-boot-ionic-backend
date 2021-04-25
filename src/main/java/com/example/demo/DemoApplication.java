@@ -1,6 +1,8 @@
 package com.example.demo;
 
 import com.example.demo.domain.*;
+import com.example.demo.enums.ClienteType;
+import com.example.demo.enums.StatePayment;
 import com.example.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -8,7 +10,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 @SpringBootApplication
 @EnableAutoConfiguration
@@ -32,6 +37,12 @@ public class DemoApplication implements CommandLineRunner  {
 	@Autowired
 	private ClientRepository clientRepository;
 
+	@Autowired
+	private OrderRepository orderRepository;
+
+	@Autowired
+	private PaymentRepository paymentRepository;
+
 	public static void main(String[] args)
 	{
 		SpringApplication.run(DemoApplication.class, args);
@@ -43,7 +54,7 @@ public class DemoApplication implements CommandLineRunner  {
 	 * aqui estamos instanciando os objetos do modelo concentual
 	 * */
 	@Override
-	public void run(String... args) {
+	public void run(String... args) throws ParseException {
 		Category c1 = new Category(null, "Informática");
 		Category c2 = new Category(null, "Escritório");
 
@@ -85,6 +96,21 @@ public class DemoApplication implements CommandLineRunner  {
 		clientRepository.saveAll(Arrays.asList(cli));
 		addressRepository.saveAll(Arrays.asList(adress, adress2));
 
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+
+		Order ord1 = new Order(null, sdf.parse("30/09/2017 10:32"), cli, adress);
+		Order ord2 = new Order(null, sdf.parse("10/10/2017 19:35"), cli, adress2);
+
+		Payment payment1 = new PaymentWithCard(null, StatePayment.SETTLED, ord1, 6);
+		ord1.setPayment(payment1);
+
+		Payment payment2 = new PaymentWithTicket(null, StatePayment.PENDING, ord2, sdf.parse("20/10/2017 00:00"), null);
+		ord2.setPayment(payment2);
+
+		cli.getOrders().addAll(Arrays.asList(ord1, ord2));
+
+		orderRepository.saveAll(Arrays.asList(ord1, ord2));
+		paymentRepository.saveAll(Arrays.asList(payment1, payment2));
 
 	}
 }

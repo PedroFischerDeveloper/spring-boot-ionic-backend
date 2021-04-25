@@ -1,5 +1,6 @@
 package com.example.demo.domain;
 
+import com.example.demo.enums.ClienteType;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -25,6 +26,17 @@ public class Client implements Serializable {
     @ElementCollection // anotação que permite representar uma entidade fraca
     @CollectionTable(name = "PHONE")
     private Set<String> phones = new HashSet<>();
+
+    @OneToMany(mappedBy = "client")
+    private List<Order> orders = new ArrayList<>();
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
 
     public Client() {};
 

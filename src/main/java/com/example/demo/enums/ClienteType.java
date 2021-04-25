@@ -1,4 +1,4 @@
-package com.example.demo.domain;
+package com.example.demo.enums;
 
 public enum ClienteType {
     PERSON(0, "Pessoa Física"),
