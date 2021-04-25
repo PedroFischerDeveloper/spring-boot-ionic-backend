@@ -43,6 +43,9 @@ public class DemoApplication implements CommandLineRunner  {
 	@Autowired
 	private PaymentRepository paymentRepository;
 
+	@Autowired
+	private ItemOrderRepository itemOrderRepository;
+
 	public static void main(String[] args)
 	{
 		SpringApplication.run(DemoApplication.class, args);
@@ -112,5 +115,17 @@ public class DemoApplication implements CommandLineRunner  {
 		orderRepository.saveAll(Arrays.asList(ord1, ord2));
 		paymentRepository.saveAll(Arrays.asList(payment1, payment2));
 
+		ItemOrder ip1 = new ItemOrder(ord1, p1, 0.00, 1, 2000.00);
+		ItemOrder ip2 = new ItemOrder(ord1, p3, 0.00, 2, 80.00);
+		ItemOrder ip3 = new ItemOrder(ord2, p2, 100.00, 1, 800.00);
+
+		ord1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ord2.getItens().addAll(Arrays.asList(ip3));
+
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+
+		itemOrderRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 	}
 }
