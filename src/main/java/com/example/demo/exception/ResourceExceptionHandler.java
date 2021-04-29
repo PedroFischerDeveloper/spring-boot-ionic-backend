@@ -1,6 +1,6 @@
 package com.example.demo.exception;
 
-import com.example.demo.exception.ObjectNotFoundException;
+
 import com.example.demo.resources.StandardError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

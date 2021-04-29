@@ -1,6 +1,7 @@
 package com.example.demo.resources;
 
 import com.example.demo.domain.Category;
+import com.example.demo.dtos.CategoryDto;
 import com.example.demo.services.CategoryServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="categories")
@@ -51,4 +53,15 @@ public class CategoriaResources {
         return ResponseEntity.noContent().build();
     }
 
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<CategoryDto>> findAll() {
+        List<Category> list = categoryServices.findAll();
+
+        // percorre a lista de Category e transforma em CategoryDto
+        List<CategoryDto> listDto = list.stream()
+                .map(category -> new CategoryDto(category))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok().body(listDto);
+    }
 }
