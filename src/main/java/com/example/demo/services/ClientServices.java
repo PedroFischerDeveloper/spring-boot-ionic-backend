@@ -1,8 +1,7 @@
 package com.example.demo.services;
 
-import com.example.demo.domain.Category;
 import com.example.demo.domain.Client;
-import com.example.demo.repository.CategoryRepository;
+import com.example.demo.exception.ObjectNotFoundException;
 import com.example.demo.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
