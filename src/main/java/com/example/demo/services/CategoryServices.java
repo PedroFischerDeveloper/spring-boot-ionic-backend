@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.domain.Category;
+import com.example.demo.dtos.CategoryDto;
 import com.example.demo.exception.DataIntegrityException;
 import com.example.demo.exception.ObjectNotFoundException;
 import com.example.demo.repository.CategoryRepository;
@@ -36,7 +37,6 @@ public class CategoryServices {
     }
 
     public Category insert(Category category) {
-        category.setId(null); // garantindo que será uma inserção
         return categoryRepository.save(category);
     }
 
@@ -73,5 +73,9 @@ public class CategoryServices {
 
     public Page findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
         return categoryRepository.findAll(PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy));
+    }
+
+    public Category fromDTO(CategoryDto categoryDto) {
+        return new Category(categoryDto.getId(), categoryDto.getNome());
     }
 }

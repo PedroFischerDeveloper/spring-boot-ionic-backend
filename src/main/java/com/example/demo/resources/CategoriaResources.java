@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.persistence.GeneratedValue;
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +30,8 @@ public class CategoriaResources {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> insert(@RequestBody Category category) {
-        Category categoryResponse = categoryServices.insert(category);
+    public ResponseEntity<Void> insert(@Valid @RequestBody CategoryDto categoryDto) {
+        Category categoryResponse = categoryServices.insert(categoryServices.fromDTO(categoryDto));
 
         // cria respost no formato de uri do objeto criado
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri()
@@ -41,10 +42,9 @@ public class CategoriaResources {
     }
 
     @RequestMapping(value = "/{categoryId}", method = RequestMethod.PUT)
-    public ResponseEntity<Void> update(@RequestBody Category category, @PathVariable Integer categoryId) {
-        category.setId(categoryId);
-        categoryServices.update(category);
-
+    public ResponseEntity<Void> update(@Valid @RequestBody CategoryDto categoryDto, @PathVariable Integer categoryId) {
+        categoryDto.setId(categoryId);
+        categoryServices.update(categoryServices.fromDTO(categoryDto));
         return ResponseEntity.noContent().build();
     }
 
