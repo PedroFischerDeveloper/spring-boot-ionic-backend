@@ -1,5 +1,6 @@
 package com.example.demo.resources;
 
+import com.example.demo.domain.Client;
 import com.example.demo.services.ClientServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class ClientResources {
 
 
     @RequestMapping(value = "/{clientId}", method = RequestMethod.GET)
-    public ResponseEntity<?> findById(@PathVariable Integer clientId) {
+    public ResponseEntity<Client> findById(@PathVariable Integer clientId) {
         return ResponseEntity.ok().body(clientServices.findById(clientId));
     }
 

@@ -28,4 +28,20 @@ public class CategoryServices {
         return category.get();
     }
 
+    public Category insert(Category category) {
+        category.setId(null); // garantindo que será uma inserção
+        return categoryRepository.save(category);
+    }
+
+    public Category update(Category category) {
+        Integer id = category.getId();
+        Optional<Category> categoryExists = categoryRepository.findById(id);
+
+        if(categoryExists.isEmpty()) {
+            throw new ObjectNotFoundException("Object not found " + category);
+        }
+
+        return categoryRepository.save(category);
+    }
+
 }
