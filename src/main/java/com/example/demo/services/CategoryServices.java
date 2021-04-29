@@ -48,7 +48,10 @@ public class CategoryServices {
             throw new ObjectNotFoundException("Object not found " + category);
         }
 
-        return categoryRepository.save(category);
+        Category categoryUpdate = categoryExists.get();
+        categoryUpdate.setNome(category.getNome());
+
+        return categoryRepository.save(categoryUpdate);
     }
 
 
