@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
 import com.example.demo.enums.StatePayment;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
