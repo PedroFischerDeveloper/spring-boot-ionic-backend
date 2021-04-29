@@ -6,6 +6,10 @@ import com.example.demo.exception.ObjectNotFoundException;
 import com.example.demo.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -65,5 +69,9 @@ public class CategoryServices {
 
     public List<Category> findAll() {
         return categoryRepository.findAll();
+    }
+
+    public Page findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+        return categoryRepository.findAll(PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy));
     }
 }
